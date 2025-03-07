@@ -1,42 +1,32 @@
-name: CI/CD Pipeline for HTML
+name: Deploy HTML to GitHub Pages
 
 on:
   push:
     branches:
-      - main   # Trigger on push to main branch
+      - main  # Trigger on push to the 'main' branch
   pull_request:
     branches:
-      - main   # Trigger on pull requests to main branch
+      - main  # Trigger on pull request to 'main'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest   # Use the latest Ubuntu environment
+  deploy:
+    runs-on: ubuntu-latest  # Use the latest version of Ubuntu
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2  # Checkout the code from the repository
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'  # Use a specific Node.js version (optional, in case you need npm)
-
-      - name: Install dependencies (Optional)
+      - name: Set up Git for GitHub Pages
         run: |
-          npm install  # If you have any dependencies (like using Parcel or Webpack for a build)
-
-      - name: Build project (Optional)
-        run: |
-          npm run build   # If you're using a build tool like Webpack or Parcel
-
-      - name: Deploy to GitHub Pages
-        run: |
-          git config --global user.email "parag.yelonde159@gmail.com"
           git config --global user.name "Parag Yelonde"
-          git remote set-url origin https://github.com/${{ github.repository }}
-          git checkout -b gh-pages
-          git add .
-          git commit -m "Deploy updates"
-          git push --force origin gh-pages
+          git config --global user.email "parag.yelonde159@gmail.com"
+
+      - name: Create gh-pages branch
+        run: |
+          git checkout --orphan gh-pages   # Create a new gh-pages branch
+          git reset --hard                 # Clean up any files
+          git add .                        # Add all files to git
+          git commit -m "Deploy HTML files"
+          git push --force origin gh-pages # Push to the gh-pages branch
 
 
