@@ -3,9 +3,9 @@
 name: Python Test Pipeline
 
 on:
-  pull_request:
+  push:
     branches:
-      - main  # Trigger on pull requests to 'main' branch
+      - main  # Trigger the workflow on pushes to the 'main' branch
 
 jobs:
   test:
@@ -19,12 +19,11 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.9'
+          python-version: '3.9'  # Set Python version to 3.9
 
       - name: Install dependencies
         run: |
-          # If you have a `requirements.txt` or dependencies, you can install them here
-          echo "No dependencies to install"  # This can be changed if you have dependencies
+          echo "No dependencies to install"  # Install dependencies if needed
 
       - name: Run Unit Tests
         run: |
