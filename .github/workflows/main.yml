@@ -1,14 +1,17 @@
-# .github/workflows/test.yml
+# .github/workflows/main.yml
 
-name: Test Python App
+name: Python CI Pipeline
 
 on:
   push:
     branches:
       - main  # Trigger on push to 'main' branch
+  pull_request:
+    branches:
+      - main  # Trigger on pull request to 'main' branch
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,4 +30,4 @@ jobs:
 
       - name: Run tests with pytest
         run: |
-          pytest --maxfail=1 --disable-warnings -q
+          pytest --maxfail=1 --disable-warnings -qss
