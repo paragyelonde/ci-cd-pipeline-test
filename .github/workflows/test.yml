@@ -1,0 +1,32 @@
+# .github/workflows/test.yml
+
+name: Python Test Pipeline
+
+on:
+  pull_request:
+    branches:
+      - main  # Trigger on pull requests to 'main' branch
+
+jobs:
+  test:
+    name: Test Job  # Name of the job
+    runs-on: ubuntu-latest  # Run on the latest Ubuntu version
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2  # Check out the repository code
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          # If you have a `requirements.txt` or dependencies, you can install them here
+          echo "No dependencies to install"  # This can be changed if you have dependencies
+
+      - name: Run Unit Tests
+        run: |
+          python -m unittest discover  # Discover and run all tests in the repository
+

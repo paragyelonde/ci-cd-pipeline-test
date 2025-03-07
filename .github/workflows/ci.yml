@@ -1,24 +1,38 @@
-name: Deploy HTML to GitHub Pages
+# .github/workflows/main.yml
+
+name: Main Python CI Pipeline
 
 on:
   push:
     branches:
-      - main  # Trigger on push to the 'main' branch
+      - main  # Trigger on push to 'main' branch
   pull_request:
     branches:
-      - main  # Trigger on pull request to 'main'
+      - main  # Trigger on pull requests to 'main' branch
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest  # Use the latest version of Ubuntu
+  build:
+    name: Build and Run Script  # Name of the job
+    runs-on: ubuntu-latest  # Runs on the latest Ubuntu version
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2  # Checkout the code from the repository
+        uses: actions/checkout@v2  # Check out the repository code
 
-      - name: Set up Git for GitHub Pages
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'  # Set Python version to 3.9
+
+      - name: Install dependencies
         run: |
-          git config --global user.name "Parag Yelonde"
-          git config --global user.email "parag.yelonde159@gmail.com"
+          echo "No dependencies to install"  # If you had dependencies, install them here.
 
+      - name: Run Hello World Python script
+        run: python hello_world.py  # Run the Python script
+
+      - name: Display Committer Information
+        run: |
+          echo "This workflow was triggered by: ${{ github.actor }}"  # Display the user who triggered the workflow
+          echo "Commit URL: https://github.com/${{ github.repository }}/commit/${{ github.sha }}"  # Link to commit
 
